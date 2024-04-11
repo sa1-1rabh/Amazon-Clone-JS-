@@ -5,6 +5,7 @@ import { getDeliveryOption } from "../../data/deliveryOptions.js";
 export function renderPaymentSummary(){
     let productsPriceCents = 0;
     let shippingPriceCents = 0;
+    let totalQuantity = 0;
 
     cart.forEach( (cartItem) => {
         const product = getItem(cartItem.productId);
@@ -12,12 +13,14 @@ export function renderPaymentSummary(){
         
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
         shippingPriceCents += deliveryOption.priceCents;
+
+        totalQuantity += cartItem.quantity;
     });
     
     const totalBeforeTaxCents = productsPriceCents + shippingPriceCents;
     const taxCents = totalBeforeTaxCents * 0.1;
 
-    const totalCents = totalBeforeTaxCents + taxCents;
+    const totalCents = totalBeforeTaxCents + taxCents;  
 
     const paymentSummaryHTML = `
           <div class="payment-summary-title">
@@ -25,7 +28,7 @@ export function renderPaymentSummary(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${totalQuantity}):</div>
             <div class="payment-summary-money">$${(Math.round(productsPriceCents)/100).toFixed(2)}</div>
           </div>
 
