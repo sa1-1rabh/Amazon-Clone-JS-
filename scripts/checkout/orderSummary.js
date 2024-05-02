@@ -39,7 +39,7 @@ export function renderCartSummary(){
                     ${matchingItem.name}
                   </div>
                   <div class="product-price">
-                    $${(matchingItem.priceCents/100).toFixed(2)}
+                    ${matchingItem.getPrice()}
                   </div>
                   <div class="product-quantity">
                     <span>
